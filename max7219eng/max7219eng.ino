@@ -99,6 +99,7 @@ public:
 
   void fromOneToFour()
   {
+    setDecodeMode(DecodeMode::decodeD0D3());
     transfer(D0, 0x01);
     transfer(D1, 0x02);
     transfer(D2, 0x03);
@@ -107,6 +108,7 @@ public:
 
   void zeros()
   {
+    setDecodeMode(DecodeMode::decodeD0D3());
     transfer(D0, 0x00);
     transfer(D1, 0x00);
     transfer(D2, 0x00);
@@ -126,6 +128,7 @@ public:
     u8 first = (degreesC - degreesC % 10) / 10;
     u8 second = degreesC % 10;
 
+    setDecodeMode(DecodeMode::noDecode());
     transfer(D0, DIGITS[first]);
     transfer(D1, DIGITS[second]);
     transfer(D2, 0b01100011);
@@ -191,12 +194,11 @@ void setup()
   dsp.init();
   dsp.setIntensity(100);
 
-  // dsp.setDecodeMode(DecodeMode::decodeD0D3());
-  // dsp.fromOneToFour();
+  dsp.fromOneToFour();
+  delay(1000);
 
-  // dsp.blink(200);
+  dsp.blink(200);
 
-  dsp.setDecodeMode(DecodeMode::noDecode());
   dsp.temperature(35);
 }
 
