@@ -1,4 +1,5 @@
-#include "max7219eng.h"
+#include "Max7219Eng.h"
+#include "Led7x4Demo.h"
 
 #define DIN 4
 #define CLK 3
@@ -6,6 +7,7 @@
 #define DIGITS 4
 
 Max7219Eng dsp(DIN, CLK, LOAD, DIGITS);
+Led7x4Demo demo(&dsp);
 
 void setup()
 {
@@ -20,10 +22,14 @@ void setup()
   dsp.setIntensity(100);
 
   // DEMO
-  dsp.fromOneToFour();
+  demo.fromOneToFour();
   delay(1000);
   dsp.blink(200);
-  dsp.temperature(35);
+  delay(200);
+  dsp.blink(200);
+  delay(200);
+  dsp.blink(200);
+  demo.temperature(35);
 }
 
 void loop()

@@ -1,3 +1,8 @@
+#ifndef MAX7219ENG_H
+#define MAX7219ENG_H
+
+#include <Arduino.h>
+
 #define u16 unsigned short
 #define u8 unsigned char
 
@@ -69,11 +74,7 @@ void setup()
 
   dsp.init();
   dsp.setIntensity(100);
-
-  dsp.fromOneToFour();
-  delay(1000);
-  dsp.blink(200);
-  dsp.temperature(35);
+  dsp.setDigit(D0, 0b01111110);
 }
 
 void loop()
@@ -90,12 +91,6 @@ public:
   void setDecodeMode(DecodeModeEnum mode);
   void setIntensity(u8 percent);
   void setDigit(u8 digit, u8 data);
-
-  // DEMO
-
-  void fromOneToFour();
-  void zeros();
-  void temperature(u8 degreesC);
   void blink(int delayMs);
 
 private:
@@ -106,3 +101,5 @@ private:
 
   void transfer(u8 addr, u8 data);
 };
+
+#endif
