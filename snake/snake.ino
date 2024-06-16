@@ -1,11 +1,10 @@
 #include "Max7219Eng.h"
+#include "Game.h"
 
 #define DIN 4
 #define CLK 3
 #define LOAD 2
 #define DIGITS 8
-
-Max7219Eng dsp(DIN, CLK, LOAD, DIGITS);
 
 const u8 diagonal[8] = {
     0b10000000,
@@ -38,8 +37,12 @@ const u8 heart[8] = {
     0b00011000,
 };
 
+Max7219Eng dsp(DIN, CLK, LOAD, DIGITS);
+Game game(&dsp);
+
 void setup()
 {
+  Serial.begin(9600);
   pinMode(DIN, OUTPUT);
   pinMode(CLK, OUTPUT);
   pinMode(LOAD, OUTPUT);
@@ -47,11 +50,26 @@ void setup()
   dsp.init();
   dsp.setIntensity(100);
   dsp.setDecodeMode(DecodeMode::noDecode());
-  dsp.test(1);
-  delay(1000);
-  dsp.test(0);
-  delay(1000);
+  // dsp.test(1);
+  // delay(100);
+  // dsp.test(0);
+  displayImage(diagonal);
+  clear();
 
+  game.init();
+}
+
+void loop()
+{
+  if (game.needNextFrame())
+  {
+    game.nextFrame();
+  }
+}
+
+void demo()
+{
+  delay(1000);
   displayImage(diagonal);
   delay(1000);
   displayImage(smiley);
@@ -59,14 +77,18 @@ void setup()
   displayImage(heart);
 }
 
-void loop()
-{
-}
-
 void displayImage(const u8 bitmap[8])
 {
   for (short i = 0; i < 8; i++)
   {
     dsp.setDigit(i + 1, bitmap[i]);
+  }
+}
+
+void clear()
+{
+  for (short i = 0; i < 8; i++)
+  {
+    dsp.setDigit(i + 1, 0);
   }
 }
