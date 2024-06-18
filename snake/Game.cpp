@@ -16,26 +16,22 @@ Game::Game(Max7219Eng *dsp) : dsp(dsp), score(0)
 void Game::init()
 {
   placeSnake();
-  placeFruit();
-}
-
-void Game::loop()
-{
+  // placeFruit();
 }
 
 void Game::placeSnake()
 {
-  snake.body[0].x = 3;
-  snake.body[0].y = 4;
+  snake.body[0].x = 4;
+  snake.body[0].y = 5;
 
   snake.body[1].x = 4;
   snake.body[1].y = 4;
 
-  snake.dir.x = -1;
-  snake.dir.y = 0;
+  snake.body[2].x = 4;
+  snake.body[2].y = 3;
 
-  state[4][3] = 1;
-  state[4][4] = 1;
+  snake.dir.x = 0;
+  snake.dir.y = -1;
 }
 
 void Game::placeFruit()
@@ -64,6 +60,7 @@ void Game::nextFrame()
 {
   // Serial.println("next frame");
   clear();
+  moveSnake();
 
   for (int i = 0; i < 8; i++)
   {
@@ -85,5 +82,62 @@ void Game::clear()
   for (short i = 0; i < 8; i++)
   {
     dsp->setDigit(i + 1, 0);
+  }
+}
+
+void Game::moveSnake()
+{
+  for (int i = 0; i < 64; i++)
+  {
+    int x = snake.body[i].x;
+    int y = snake.body[i].y;
+
+    state[x][y] = 0;
+  }
+
+  for (int i = 0; i < 64; i++)
+  {
+    if (snake.body[i].x == -1 || snake.body[i].y == -1)
+    {
+      continue;
+    }
+
+    snake.body[i].x = snake.body[i].x + snake.dir.x;
+    snake.body[i].y = snake.body[i].y + snake.dir.y;
+
+    if (snake.body[i].x < 0)
+    {
+      snake.body[i].x = 7;
+    }
+
+    if (snake.body[i].x == 8)
+    {
+      snake.body[i].x = 0;
+    }
+
+    if (snake.body[i].y < 0)
+    {
+      snake.body[i].y = 7;
+    }
+
+    if (snake.body[i].y == 8)
+    {
+      snake.body[i].y = 0;
+    }
+
+    int x = snake.body[i].x;
+    int y = snake.body[i].y;
+
+    // Serial.print("i=");
+    // Serial.print(i);
+    // Serial.print(";");
+    // Serial.print("x=");
+    // Serial.print(x);
+    // Serial.print(";");
+    // Serial.print("y=");
+    // Serial.print(y);
+    // Serial.println(";");
+
+    state[x][y] = 1;
   }
 }

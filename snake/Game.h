@@ -8,7 +8,7 @@
 
 static const int DELAY = 1000 / FPS;
 
-struct Pos
+struct Vec2d
 {
   int x;
   int y;
@@ -16,8 +16,8 @@ struct Pos
 
 struct Snake
 {
-  Pos body[64];
-  Pos dir;
+  Vec2d body[64];
+  Vec2d dir;
 };
 
 class Game
@@ -26,18 +26,14 @@ public:
   Game(Max7219Eng *dsp);
 
   void init();
-  void loop();
   int needNextFrame();
   void nextFrame();
-  void placeSnake();
-  void placeFruit();
-  void clear();
 
 private:
   Max7219Eng *dsp;
   int score;
   int lastFrameAt;
-  Pos fruitPos;
+  Vec2d fruitPos;
   Snake snake;
 
   char state[8][8] = {
@@ -50,6 +46,12 @@ private:
       {0, 0, 0, 0, 0, 0, 0, 0},
       {0, 0, 0, 0, 0, 0, 0, 0},
   };
+
+  void placeSnake();
+  void placeFruit();
+  void clear();
+
+  void moveSnake();
 };
 
 #endif

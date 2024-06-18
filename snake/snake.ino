@@ -54,6 +54,7 @@ void setup()
   // delay(100);
   // dsp.test(0);
   displayImage(diagonal);
+  delay(250);
   clear();
 
   game.init();
