@@ -1,23 +1,29 @@
-struct Vec2d
-{
-  int x;
-  int y;
-};
+#include "Vec2d.h"
 
 class Snake
 {
 public:
   Snake()
   {
-    dir = {
-        .x = 1,
-        .y = 0};
-
     for (int i = 0; i < 64; i++)
     {
-      body[i].x = -1;
-      body[i].y = -1;
+      body[i] = Vec2d(-1, -1);
     }
+
+    body[0] = Vec2d(4, 5);
+    body[1] = Vec2d(4, 4);
+    body[2] = Vec2d(4, 3);
+
+    dir = Vec2d(0, -1);
+
+    // body[0].x = 4;
+    // body[0].y = 5;
+
+    // body[1].x = 4;
+    // body[1].y = 4;
+
+    // body[2].x = 4;
+    // body[2].y = 3;
   }
 
 private:

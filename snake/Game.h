@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "Max7219Eng.h"
+#include "Snake.h"
 
 #define FPS 5
 
