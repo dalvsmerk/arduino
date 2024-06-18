@@ -21,6 +21,16 @@ void Max7219Eng::init()
   transfer(SHUTDOWN, 1);
 }
 
+void Max7219Eng::shutdown(u8 enable)
+{
+  transfer(SHUTDOWN, enable ? 0 : 1);
+}
+
+void Max7219Eng::test(u8 enable)
+{
+  transfer(TEST, enable);
+}
+
 void Max7219Eng::setDecodeMode(DecodeModeEnum mode)
 {
   transfer(SHUTDOWN, 0);

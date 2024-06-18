@@ -88,6 +88,8 @@ public:
   Max7219Eng(int pinDin, int pinClk, int pinLoad, short digits);
 
   void init();
+  void shutdown(u8 enable);
+  void test(u8 enable);
   void setDecodeMode(DecodeModeEnum mode);
   void setIntensity(u8 percent);
   void setDigit(u8 digit, u8 data);
